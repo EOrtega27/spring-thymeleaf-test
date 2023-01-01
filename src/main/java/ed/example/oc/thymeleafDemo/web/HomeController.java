@@ -1,7 +1,9 @@
-package ed.example.oc.thymeleafDemo;
+package ed.example.oc.thymeleafDemo.web;
 
+import ed.example.oc.thymeleafDemo.DAO.PersonaDao;
 import ed.example.oc.thymeleafDemo.domain.Persona;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,12 @@ import java.util.List;
 public class HomeController {
     @Value("${index.mensaje}")
     private String saludo;
+
+    @Autowired
+    private PersonaDao personaDao;
     @GetMapping("/")
     public String inicio(Model model){
-        String mensaje = "Hola mundo con Thymeleaf";
+        String mensaje = "Lista Predefinida";
 
         //lista de lstPersonas a iterar
         var persona1 = new Persona();
@@ -48,12 +53,11 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/lstVacia")
-    public String lstVacia(Model model){
-        String mensaje = "Hola mundo con Thymeleaf";
+    @GetMapping("/fromDB")
+    public String lstBD(Model model){
+        String mensaje = "Lista desde MySQL";
 
-
-        List<Persona> personas = new ArrayList<>();
+        var personas = personaDao.findAll();
 
         model.addAttribute("mensaje", mensaje);
         model.addAttribute("saludo", saludo);
