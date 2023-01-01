@@ -3,11 +3,13 @@ package ed.example.oc.thymeleafDemo.web;
 import ed.example.oc.thymeleafDemo.DAO.PersonaDao;
 import ed.example.oc.thymeleafDemo.domain.Persona;
 import ed.example.oc.thymeleafDemo.service.PersonaService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -43,7 +45,10 @@ public class HomeController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(Persona persona){
+    public String guardar(@Valid Persona persona, Errors error){
+        if(error.hasErrors()){
+            return "modificar";
+        }
         personaService.guardar(persona);
         return "redirect:/";
     }

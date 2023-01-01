@@ -1,6 +1,7 @@
 package ed.example.oc.thymeleafDemo.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.io.Serializable;
@@ -14,6 +15,8 @@ public class Persona implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPersona;
 
+    @Column
+    @NotEmpty
     private String name;
     private String lastname;
     private String email;
