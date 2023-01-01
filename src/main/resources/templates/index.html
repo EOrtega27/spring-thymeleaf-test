@@ -9,25 +9,30 @@
     Página de Inicio
 </div>
 <p th:text="${mensaje}"></p>
-
+<div th:if="${personas != null && !personas.empty}">
 <table border="1">
-    <div th:if="${personas != null && !personas.empty}">
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Email</th>
             <th>Telefono</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
         </tr>
         <tr th:each="persona : ${personas}">
             <td th:text="${persona.name}">a</td>
             <td th:text="${persona.lastname}">b</td>
             <td th:text="${persona.email}">c</td>
             <td th:text="${persona.phone}">d</td>
+            <td><a th:href="@{/editar/}+${persona.idPersona}" th:text="Editar"></a></td>
+            <td><a th:href="@{/eliminar/}+${persona.idPersona}" th:text="Eliminar"></a></td>
         </tr>
-    </div>
-    <div th:if="${personas == null || personas.empty}">
-        <p>La lista de personas se encuentra vacia</p>
-    </div>
 </table>
+</div>
+<div th:if="${personas == null || personas.empty}">
+    <p>La lista de personas se encuentra vacia</p>
+</div>
+
+<a th:href="@{/agregar}">Agregar Persona</a>
 </body>
 </html>
